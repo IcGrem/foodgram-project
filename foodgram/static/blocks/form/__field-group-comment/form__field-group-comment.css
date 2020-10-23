@@ -1,0 +1,14 @@
+.form__field-group-comment {
+    display: grid;
+    grid-gap: 9px;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    align-items: center;
+
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    margin: auto;
+    max-width: 470px;
+    width: 100%;
+    position: relative;
+}

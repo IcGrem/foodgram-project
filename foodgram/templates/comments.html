@@ -1,0 +1,31 @@
+{% load user_filters %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'pages/form.css' %}">
+<link rel="stylesheet" href="{% static 'pages/index.css' %}">
+<div class="form-container">
+    <div class="form">
+        {% for comment in comments %}
+            <h5 class="single-card__section-text"><a href="{% url 'profile' comment.author %}" name="comment_{{ item.id }}">{{ comment.author.get_full_name }}</a> - {{ comment.created }}</h5>
+            <p class=" single-card__section-text">{{ comment.text }}</p>
+        {% endfor %}    
+        {% if user.is_authenticated %} 
+        <form action="{% url 'social:add_comment' recipe.id %}" method="post">
+            {% csrf_token %}
+            <div class="form__group">
+                <div class="form__field-group-comment">
+                    {{ form.text|addclass:"form__textarea" }}
+                    {% if form.errors %}
+                        {% for error in field.errors %}
+                            <span class="form__error">{{ error|escape }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="form__footer">
+                <button class="button button_style_blue">Отправить комментарий</button>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+

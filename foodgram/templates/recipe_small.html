@@ -1,0 +1,22 @@
+{% load user_filters %}
+{% csrf_token %}
+<div class="card" data-id="{{ recipe.id }}">
+    <a href="{% url 'recipe' recipe.id %}" class="link"><img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="card__image"></a>
+    <div class="card__body">
+        <a class="card__title link" href="{% url 'recipe' recipe.id %}" target="_blank">{{ recipe.title }}</a>
+        <ul class="card__items">
+        {% include 'tags_for_card.html' %}
+        </ul>
+        <div class="card__items card__items_column">
+            <p class="card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мину{{ recipe.cooking_time|rupluralize:"та,ты,т" }}</p>
+            <p class="card__text"><span class="icon-user"></span> <a href="{% url 'profile' recipe.author.username %}" style="color: black">{{ recipe.author.get_full_name}}</a></p>
+            <p class="card__text"><span class="icon-comment"></span> <a href="{% url 'recipe' recipe.id %}" style="color: black">{{ recipe.comments.count }} комментари{{ recipe.comments.count|rupluralize:"й,я,ев" }}</a></p>
+        </div>
+    </div>
+    {% if request.user.is_authenticated %}
+        <div class="card__footer">
+            {% include 'button_for_cart.html' %}
+            {% include 'button_for_favorite.html' %}
+        </div>
+    {% endif %}
+</div>

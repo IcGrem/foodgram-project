@@ -1,0 +1,37 @@
+{% load static %}
+{% load user_filters %}
+{% csrf_token %}
+<div class="card-list">
+    {% for follow in page %}
+        <div class="card-user" data-author="{{ follow.author_id }}">
+            <div class="card-user__header">
+                <h2 class="card-user__title"><a href="{% url 'profile' follow.author %}" style="color: black">{{ follow.author.get_full_name }}</a></h2>
+            </div>
+            {% for recipe in follow.author.author_recipes.all|slice:":3" %}
+                <div class="card-user__body">
+                    <ul class="card-user__items">
+                        <li class="card-user__item">
+                            <div class="recipe">
+                                <a href="{% url 'recipe' recipe.id %}" class="link">
+                                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}"
+                                         class="recipe__image"></a>
+                                <h3 class="recipe__title">
+                                    {{ recipe.title }}</h3>
+                                <p class="recipe__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мину{{ recipe.cooking_time|rupluralize:"та,ты,т"}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {% endfor %}
+            <li class="card-user__item">
+                {% if follow.author.author_recipes.all|length >= 3 %}
+                    <a href="{% url 'profile' follow.author.username %}" class="card-user__link link">Еще {{ follow.author.author_recipes.all.count|add:-3 }} рецеп{{ follow.author.author_recipes.all.count|add:-3|rupluralize:"т,та,тов" }}...</a>
+                {% endif %}
+            </li>
+
+            <div class="card-user__footer">
+                <button class="button button_style_light-blue button_size_auto" name="subscribe"><span class="icon-check button__icon"></span>Отписаться</button>
+            </div>
+        </div>
+    {% endfor %}
+</div>

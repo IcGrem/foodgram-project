@@ -1,0 +1,10 @@
+{% for tag in recipe.tags.all %}
+    {% if tag.title == 'lunch' %}
+        <li class="single-card__item"><span class="badge badge_style_green">Обед</span></li>
+    {% elif tag.title == 'breakfast' %}
+        <li class="single-card__item"><span class="badge badge_style_orange">Завтрак</span></li>
+    {% else %}
+        <li class="single-card__item"><span class="badge badge_style_purple">Ужин</span></li>
+    {% endif %}
+{% endfor %}
+

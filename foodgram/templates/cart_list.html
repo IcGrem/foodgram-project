@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} Список покупок {% endblock %}
+{% load static %}
+{% block head %}
+    {% include 'head.html' with cart_list=True recipe=recipe%}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'pages/shopList.css' %}">
+<div class="main__header">
+<h1 class="main__title">Список покупок</h1>
+</div>
+    <div class="card-list card-list_column">
+      <ul class="shopping-list">
+        {% for recipe in recipes %}
+          <li class="shopping-list__item" data-id="{{ recipe.recipe.id }}">
+            <div class="recipe recipe_reverse">
+              <img src="{{ recipe.recipe.image.url }}" alt="{{ recipe.recipe.title }}" class="recipe__image recipe__image_big">
+              <h3 class="recipe__title"><a style="color: #000" href="{% url 'recipe' recipe.recipe.id %}">{{ recipe.recipe.title }}</a></h3>
+              <p class="recipe__text"><span class="icon-time"></span> {{ recipe.recipe.cooking_time }} мин.</p>
+            </div>
+            <a href="{% url 'cart_delete_recipe' recipe.recipe.id %}" class="shopping-list__button link">Удалить</a>
+          </li>
+        {% endfor %}
+      </ul>
+      {% if recipes %}
+        <a class="button button_style_blue" href="{% url 'cart_list_download' %}">Скачать список</a>
+      {% endif %}
+    </div>
+{% endblock %}
