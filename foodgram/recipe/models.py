@@ -6,37 +6,45 @@ User = get_user_model()
 
 
 class Tag(models.Model):
+    global tag_options
+    tag_options = {
+        'breakfast': ['orange', 'Завтрак'],
+        'lunch': ['green', 'Обед'],
+        'dinner': ['purple', 'Ужин']
+        }
+
     TAG_CHOICES = [
         ('breakfast', 'Завтрак'),
         ('lunch', 'Обед'),
         ('dinner', 'Ужин'),
         ]
-    title = models.CharField(max_length=10, choices=TAG_CHOICES)
+    title = models.CharField(
+        max_length=10,
+        choices=TAG_CHOICES,
+        verbose_name='Название тэга'
+        )
 
     def __str__(self):
         return self.title
 
     @property
     def color(self):
-        if self.title == 'breakfast':
-            return 'orange'
-        if self.title == 'lunch':
-            return 'green'
-        return 'purple'
+        return tag_options[self.title][0]
 
     @property
     def name(self):
-        if self.title == 'breakfast':
-            return 'Завтрак'
-        if self.title == 'lunch':
-            return 'Обед'
-        return 'Ужин'
+        return tag_options[self.title][1]
 
 
 class Ingredient(models.Model):
 
-    title = models.CharField(max_length=300)
-    dimension = models.CharField(max_length=20)
+    title = models.CharField(
+        max_length=300,
+        verbose_name='Название'
+        )
+    dimension = models.CharField(
+        max_length=20,
+        verbose_name='Единица измерения')
 
     def __str__(self):
         return str(self.title)
@@ -46,21 +54,34 @@ class Recipe(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="author_recipes"
+        related_name='author_recipes',
+        verbose_name='Автор'
         )
-    title = models.CharField(max_length=300)
-    description = models.TextField()
+    title = models.CharField(max_length=300, verbose_name='Название')
+    description = models.TextField(verbose_name='Описание')
     ingredients = models.ManyToManyField(
         Ingredient,
-        through='Recipe_Ingredient',
+        through='RecipeIngredient',
         through_fields=('recipe', 'ingredient'),
-        related_name='recipe_ingredients'
+        related_name='recipe_ingredients',
+        verbose_name='Ингредиенты'
         )
-    cooking_time = models.PositiveSmallIntegerField()
-    pub_date = models.DateTimeField("date published", auto_now_add=True)
-    tags = models.ManyToManyField(Tag, related_name='recipe_tags')
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время приготовления'
+        )
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата публикации'
+        )
+    tags = models.ManyToManyField(
+        Tag, related_name='tag_recipes',
+        verbose_name='Тэги'
+        )
     image = models.ImageField(
-        upload_to='recipe/', default='default/default_img.jpg')
+        upload_to='recipe/',
+        default='default/default_img.jpg',
+        verbose_name='Изображение'
+        )
 
     def __str__(self):
         return str(self.title)
@@ -69,25 +90,29 @@ class Recipe(models.Model):
         ordering = ['-pub_date']
 
     def get_ingredients(self):
-        return "\n".join([i.title for i in self.ingredients.all()])
+        return '\n'.join(
+            self.ingredients.all().values_list('title', flat=True))
     get_ingredients.short_description = 'Ингредиенты'
 
     def get_tags(self):
-        return "\n".join([t.title for t in self.tags.all()])
+        return '\n'.join(
+            self.ingredients.all().values_list('title', flat=True))
     get_tags.short_description = 'Тэги'
 
 
-class Recipe_Ingredient(models.Model):
+class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="recipes_quantity"
+        related_name='recipe_quantities',
+        verbose_name='Рецепт'
         )
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
+        verbose_name='Ингредиент'
         )
-    quantity = models.FloatField()
+    quantity = models.FloatField(verbose_name='Количество')
 
     def __str__(self):
         return str(self.ingredient)
@@ -97,11 +122,14 @@ class Cart(models.Model):
     shopper = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='shopper')
+        related_name='shoppers',
+        verbose_name='Покупатель'
+        )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='cart_recipes'
+        related_name='cart_recipes',
+        verbose_name='Список рецептов'
         )
 
     def __str__(self):

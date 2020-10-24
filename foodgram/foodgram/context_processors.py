@@ -9,7 +9,7 @@ def cart_list_counter(request):
     Счётчик рецептов в корзине
     """
     if request.user.is_authenticated:
-        count = Cart.objects.filter(shopper=request.user).count()
+        count = request.user.shoppers.all().count()
     else:
         count = []
     return {'count': count}

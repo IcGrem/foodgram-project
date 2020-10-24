@@ -2,9 +2,8 @@
 {% block title%} Изменить рецепт {% endblock%}
 {% load static %}
 {% block head %}
-  {% include 'head.html' with new_recipe=True%}
+    {% include 'includes/head.html' with new_recipe=True%}
 {% endblock %}
-
 {% block content %}
 {% load user_filters %}
 <link rel="stylesheet" href="{% static 'pages/form.css' %}">
@@ -53,7 +52,6 @@
                         <label for="cantidad" class="form__label" id="cantidadVal">шт.</label>
                     </div>
                     <div class="form__field-group-ingredientes-container"></div>
-                    
                     <span class="form__ingredient-link" id="addIng">Добавить ингредиент</span>
                     <span class="form__error"></span>
                 </div>
@@ -98,7 +96,6 @@
             </div>
         </form>
     </div>
-
     {% block scripts %}
         <script src="{% static 'js/config/config.js' %}"></script>
         <script src="{% static 'js/components/Header.js' %}"></script>

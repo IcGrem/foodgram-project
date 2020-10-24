@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} {{ recipe.title }} {% endblock %}
 {% block head %}
-    {% include 'head.html' %}
+    {% include 'includes/head.html' %}
 {% endblock %}
 {% load static %}
 {% load user_filters %}
@@ -14,10 +14,10 @@
             <div class="single-card__info">
                 <div class="single-card__header-info">
                     <h1 class="single-card__title">{{ recipe.title }}</h1>
-                    {% include 'button_for_favorite.html' %}  
+                    {% include 'includes/button_for_favorite.html' %}  
                 </div>
                 <ul class="single-card__items">
-                    {% include 'tags_for_card.html' %}
+                    {% include 'includes/tags_for_card.html' %}
                 </ul>
                 <div class="single-card__items single-card__items_column">
                     <p class="single-card__text"><span class="icon-time"></span> {{ recipe.cooking_time }} мину{{ recipe.cooking_time|rupluralize:"та,ты,т" }}</p>
@@ -29,13 +29,13 @@
                       </ul>
                     </div>
                     <ul class="single-card__items">
-                        {% include 'button_for_cart.html' %}
-                        {% include 'button_for_follow.html' %}
+                        {% include 'includes/button_for_cart.html' %}
+                        {% include 'includes/button_for_follow.html' %}
                     </ul>  
                 <div class="single-card__section">
                     <h3 class="single-card__section-title">Ингридиенты:</h3>
                     <div class="single-card__items single-card__items_column">
-                        {% for ingr in recipe.recipes_quantity.all %}
+                        {% for ingr in recipe.recipe_quantities.all %}
                             <p class=" single-card__section-item">{{ ingr.ingredient.title }} - {{ ingr.quantity }} {{ ingr.ingredient.dimension }}</p>
                         {% endfor %}
                     </div>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        {% include 'comments.html' with comments=comments %}
+        {% include 'includes/comments.html' with comments=comments %}
 {% block script %}
 <script src="{% static 'js/config/config.js' %}"></script>
 <script src="{% static 'js/components/Header.js' %}"></script>

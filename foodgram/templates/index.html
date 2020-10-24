@@ -1,30 +1,26 @@
 {% extends "base.html" %} 
 {% block title %} Foodgram - лучшие рецепты {% endblock title %}
-
 {% load static %}
 {% block head %}
-    {% include 'head.html' with index=True%}
+    {% include 'includes/head.html' with index=True%}
 {% endblock head %}
 {% block content %}
 {% csrf_token %}
 <link rel="stylesheet" href="{% static 'pages/index.css' %}">
         <div class="main__header">
             <h1 class="main__title">Рецепты</h1>
-            {% include 'tags.html' %}
+            {% include 'includes/tags.html' %}
         </div>    
         <div class="card-list">
                 {% for recipe in page %}
-                   {% include "recipe_small.html" with recipe=recipe %}
+                   {% include 'includes/recipe_small.html' with recipe=recipe %}
                 {% endfor %}
        </div>
-    <!-- Вывод паджинатора -->
     {% if page.has_other_pages %}
     <ul class="pagination justify-content-center">
-        {% include "paginator.html" with items=page paginator=paginator %}
+        {% include 'includes/paginator.html' with items=page paginator=paginator %}
     </ul>
-
     {% endif %}
-        
 
     {% block scripts %}
             <script src="{% static 'js/config/config.js' %}"></script>
@@ -41,4 +37,3 @@
         {% endif %}
     {% endblock scripts %}
 {% endblock %}
-

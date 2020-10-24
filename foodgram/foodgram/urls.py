@@ -21,17 +21,17 @@ from django.contrib import admin
 from django.contrib.flatpages import views
 from django.urls import include, path
 
-handler404 = "recipe.views.page_not_found"  # noqa
-handler500 = "recipe.views.server_error"  # noqa
+handler404 = 'recipe.views.page_not_found'  # noqa
+handler500 = 'recipe.views.server_error'  # noqa
 
 
 urlpatterns = [
     # админка и авторизация
     path('admin/', admin.site.urls),
-    path("auth/", include("users.urls")),
-    path("auth/", include("django.contrib.auth.urls")),
+    path('auth/', include('users.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
     # flatpages
-    path("about/", include("django.contrib.flatpages.urls")),
+    path('about/', include('django.contrib.flatpages.urls')),
     path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
     path('terms/', views.flatpage, {'url': '/terms/'}, name='terms'),
     path(
@@ -41,12 +41,12 @@ urlpatterns = [
         'about-spec/', views.flatpage,
         {'url': '/about-spec/'}, name='about-spec'),
     # подключаем urls приложений
-    path("", include("social.urls")),
-    path("", include("recipe.urls")),
+    path('', include('social.urls')),
+    path('', include('recipe.urls')),
 ]
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns += (path("__debug__/", include(debug_toolbar.urls)),)
+    urlpatterns += (path('__debug__/', include(debug_toolbar.urls)),)
     urlpatterns += static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(

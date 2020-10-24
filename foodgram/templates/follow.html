@@ -1,7 +1,7 @@
 {% extends "base.html" %} 
 {% block title %} Мои подписки {% endblock %}
 {% block head %}
-    {% include 'head.html' with follow=True%}
+    {% include 'includes/head.html' with follow=True%}
 {% endblock head %}
 {% load static %}
 {% block content %}
@@ -10,14 +10,12 @@
     <div class="main__header">
         <h1 class="main__title">Мои подписки</h1>
     </div>
-        {% include "follow_card.html"%}
+        {% include 'includes/follow_card.html'%}
     </div>
-    <!-- Вывод паджинатора -->
     {% if page.has_other_pages %}
     <ul class="pagination justify-content-center">
-        {% include "paginator.html" with items=page paginator=paginator %}
+        {% include 'includes/paginator.html' with items=page paginator=paginator %}
     </ul>
-
     {% endif %}
         
     {% block scripts %}

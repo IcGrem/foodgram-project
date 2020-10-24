@@ -1,7 +1,7 @@
 {% extends "base.html" %} 
 {% block title %} Автор рецептов: {{ profile.get_full_name }} {% endblock %}
 {% block head %}
-    {% include 'head.html'%}
+    {% include 'includes/head.html'%}
 {% endblock %}
 {% load static %}
 {% load user_filters %}
@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="{% static 'pages/index.css' %}">
         <div class="main__header">
             <h1 class="main__title">{{ profile.get_full_name }}</h1>
-            {% include 'tags.html' %}
+            {% include 'includes/tags.html' %}
         </div>
         {% csrf_token %}
         {% if user != profile and user.is_authenticated %}
@@ -26,13 +26,13 @@
         {% endif %}
         <div class="card-list">
                {% for recipe in page %}
-                    {% include "recipe_small.html" %}
+                    {% include 'includes/recipe_small.html' %}
                 {% endfor %}
         </div>
 
     {% if page.has_other_pages %}
     <ul class="pagination justify-content-center">
-        {% include "paginator.html" with items=page paginator=paginator %}
+        {% include 'includes/paginator.html' with items=page paginator=paginator %}
     </ul>
 
     {% endif %}

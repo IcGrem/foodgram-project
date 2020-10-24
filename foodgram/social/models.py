@@ -9,12 +9,14 @@ class Favorit(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="user_favorit"
+        related_name='user_favorits',
+        verbose_name='Автор'
         )
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="recipe_favorit"
+        related_name='favorits',
+        verbose_name='Избранное'
         )
 
     def __str__(self):
@@ -28,12 +30,14 @@ class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="follower"
+        related_name='follower',
+        verbose_name='Подписчик'
         )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="following"
+        related_name='following',
+        verbose_name='Автор'
         )
 
     def __str__(self):
@@ -47,15 +51,24 @@ class Comment(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name="comments"
+        related_name='comments',
+        verbose_name='Комментарии'
         )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="comment_authors"
+        related_name='comment_authors',
+        verbose_name='Авторы комментариев'
         )
-    text = models.TextField(blank=False, null=False)
-    created = models.DateTimeField("comment_date_pub", auto_now_add=True)
+    text = models.TextField(
+        blank=False,
+        null=False,
+        verbose_name='Текст'
+        )
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата публикации'
+        )
 
     def __str__(self):
         return self.text
