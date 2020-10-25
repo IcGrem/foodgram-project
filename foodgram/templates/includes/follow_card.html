@@ -7,7 +7,7 @@
             <div class="card-user__header">
                 <h2 class="card-user__title"><a href="{% url 'profile' follow.author %}" style="color: black">{{ follow.author.get_full_name }}</a></h2>
             </div>
-            {% for recipe in follow.author.author_recipes.all|slice:":3" %}
+            {% for recipe in follow.author.recipes.all|slice:":3" %}
                 <div class="card-user__body">
                     <ul class="card-user__items">
                         <li class="card-user__item">
@@ -24,8 +24,8 @@
                 </div>
             {% endfor %}
             <li class="card-user__item">
-                {% if follow.author.author_recipes.all|length >= 3 %}
-                    <a href="{% url 'profile' follow.author.username %}" class="card-user__link link">Еще {{ follow.author.author_recipes.all.count|add:-3 }} рецеп{{ follow.author.author_recipes.all.count|add:-3|rupluralize:"т,та,тов" }}...</a>
+                {% if follow.author.recipes.all|length >= 3 %}
+                    <a href="{% url 'profile' follow.author.username %}" class="card-user__link link">Еще {{ follow.author.recipes.all.count|add:-3 }} рецеп{{ follow.author.recipes.all.count|add:-3|rupluralize:"т,та,тов" }}...</a>
                 {% endif %}
             </li>
 

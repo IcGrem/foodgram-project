@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Comment, Follow, Favorit
+
+from social.models import Comment, Favorit, Follow
 
 
 class CommentAdmin(admin.ModelAdmin):

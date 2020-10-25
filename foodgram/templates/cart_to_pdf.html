@@ -29,7 +29,7 @@
             {% for ingredient in ingredients %}
                 <li>
                 <div>
-                    <h2>{{ ingredient.ingredients__title }} - {{ ingredient.recipe_quantities__quantity__sum }} {{ ingredient.ingredients__dimension }}</h2>
+                    <h2>{{ ingredient.ingredient__title }} - {{ ingredient.quantities__quantity__sum }} {{ ingredient.ingredient__dimension }}</h2>
                 </div>
                 </li>
             {% endfor %}

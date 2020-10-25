@@ -1,8 +1,9 @@
 from django.urls import path, include
-from . import views
+
+from social import views
+
 
 app_name = 'social'
-
 urlpatterns = [
     # добавление комментария к рецепту
     path(

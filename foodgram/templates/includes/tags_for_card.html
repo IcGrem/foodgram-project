@@ -1,4 +1,4 @@
-{% for tag in recipe.tags.all %}
+{% for tag in recipe.tag.all %}
     {% if tag.title == 'lunch' %}
         <li class="single-card__item"><span class="badge badge_style_green">Обед</span></li>
     {% elif tag.title == 'breakfast' %}

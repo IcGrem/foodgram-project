@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.shortcuts import render
+
 from recipe.models import Cart
 
 
@@ -9,7 +10,7 @@ def cart_list_counter(request):
     Счётчик рецептов в корзине
     """
     if request.user.is_authenticated:
-        count = request.user.shoppers.all().count()
+        count = request.user.carts.all().count()
     else:
         count = []
     return {'count': count}

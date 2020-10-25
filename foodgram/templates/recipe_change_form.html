@@ -30,10 +30,10 @@
                 <p class="form__label">Теги</p>
                 <div class="form__field-group">
                     <div class="tags">
-                        {% for tags_choice, tags_title in form.tags.field.choices %}
+                        {% for tag_choice, tag_title in form.tag.field.choices %}
                         <div class="tags__item">
-                            <input type="checkbox" name="tags" value ="{{ tags_choice.instance.pk }}" id="id_{{ tags_choice.instance.name }}" class="tags__checkbox tags__checkbox_style_{{ tags_choice.instance.color }}">
-                            <label for="id_{{ tags_choice.instance.name }}" class="tags__label">{{ tags_choice.instance.name }}</label>
+                            <input type="checkbox" name="tags" value ="{{ tag_choice.instance.pk }}" id="id_{{ tag_choice.instance.name }}" class="tags__checkbox tags__checkbox_style_{{ tag_choice.instance.color }}">
+                            <label for="id_{{ tag_choice.instance.name }}" class="tags__label">{{ tag_choice.instance.name }}</label>
                         </div>
                         {% endfor %}
                     </div>

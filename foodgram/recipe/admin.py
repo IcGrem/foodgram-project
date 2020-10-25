@@ -1,9 +1,11 @@
 from django.contrib import admin
-from .models import Cart, Ingredient, Recipe, RecipeIngredient, Tag
+
+from recipe.models import (
+    Cart, Ingredient, Recipe, RecipeIngredient, Tag)
 
 
 class IngredientsInline(admin.TabularInline):
-    model = Recipe.ingredients.through
+    model = Recipe.ingredient.through
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -18,7 +20,7 @@ class RecipeAdmin(admin.ModelAdmin):
         'image',
         )
     inlines = [IngredientsInline, ]
-    exclude = ('ingredients',)
+    exclude = ('ingredient',)
     search_fields = ('title',)
     list_filter = ('title',)
     empty_value_display = '-пусто-'

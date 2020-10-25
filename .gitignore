@@ -127,5 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-#
-autocomplete.css
+# collectstatic
+/foodgram/static/admin/
+/foodgram/static/debug_toolbar/

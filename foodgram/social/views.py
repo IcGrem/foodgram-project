@@ -7,9 +7,9 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import View
 
-from .forms import CommentForm
 from recipe.models import Recipe, Tag, User
 from recipe.service import get_tags_from_get
+from social.forms import CommentForm
 from social.models import Comment, Favorit, Follow
 
 
@@ -57,11 +57,11 @@ def favorit_index(request):
     """
     favorit_recipes = Recipe.objects.select_related(
         'author'
-        ).prefetch_related('tags',).filter(favorits__author=request.user)
+        ).prefetch_related('tag',).filter(favorits__author=request.user)
     tags_qs, tags_from_get = get_tags_from_get(request)
     if tags_qs:
         favorit_recipes = Recipe.objects.filter(
-            favorits__author=request.user, tags__title__in=tags_qs
+            favorits__author=request.user, tag__title__in=tags_qs
         ).distinct()
     paginator = Paginator(favorit_recipes, 6)
     page_number = request.GET.get('page')

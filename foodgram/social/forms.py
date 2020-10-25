@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm, Textarea
 
-from .models import Comment
+from social.models import Comment
 
 
 class CommentForm(ModelForm):

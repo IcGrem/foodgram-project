@@ -1,5 +1,7 @@
 import json
 
+from xhtml2pdf import pisa
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
 from django.core.paginator import Paginator
@@ -8,7 +10,6 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import get_template
 from django.views.generic import View
-from xhtml2pdf import pisa
 
 from recipe.forms import RecipeForm
 from recipe.models import (
@@ -37,12 +38,11 @@ def index(request):
     Главная страница
     """
     recipes = Recipe.objects.select_related(
-        'author').prefetch_related('tags',)
+        'author').prefetch_related('tag',)
     #  https://otus.ru/nest/post/286/
     tags_qs, tags_from_get = get_tags_from_get(request)
     if tags_qs:
-        recipes = Recipe.objects.filter(
-                tags__title__in=tags_qs).distinct()
+        recipes = Recipe.objects.filter(tag__title__in=tags_qs).distinct()
     paginator = Paginator(recipes, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -59,11 +59,11 @@ def profile(request, username):
     Страница пользователя
     """
     profile = get_object_or_404(User, username=username)
-    profile_recipes = profile.author_recipes.all()
+    profile_recipes = profile.recipes.all()
     tags_qs, tags_from_get = get_tags_from_get(request)
     if tags_qs:
         profile_recipes = Recipe.objects.filter(
-            author=profile, tags__title__in=tags_qs).distinct()
+            author=profile, tag__title__in=tags_qs).distinct()
     paginator = Paginator(profile_recipes, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -134,7 +134,7 @@ def recipe_edit(request, recipe_id):
         recipe = recipe_form.save(commit=False)
         recipe.author = request.user
         recipe.save()
-        recipe.recipe_quantities.all().delete()
+        recipe.quantities.all().delete()
         for title, quantity in ingredients.items():
             ingredient = get_object_or_404(Ingredient, title=title)
             recipe_ingredient = RecipeIngredient(
@@ -197,7 +197,7 @@ def cart_list(request):
     """
     Список рецептов в корзине
     """
-    recipes = request.user.shoppers.all()
+    recipes = request.user.carts.all()
     return render(request, 'cart_list.html', {'recipes': recipes})
 
 
@@ -216,10 +216,9 @@ def cart_list_download(request):
     """
     Формирование и скачивание списка ингредиентов в PDF
     """
-    recipes = Recipe.objects.filter(cart_recipes__shopper=request.user).values(
-        'ingredients__title', 'ingredients__dimension',)
-    ingredients = recipes.annotate(
-        Sum('recipe_quantities__quantity')).order_by()
+    recipes = Recipe.objects.filter(recipe_carts__shopper=request.user).values(
+        'ingredient__title', 'ingredient__dimension',)
+    ingredients = recipes.annotate(Sum('quantities__quantity')).order_by()
     template_path = 'cart_to_pdf.html'
     context = {'ingredients': ingredients}
     response = HttpResponse(content_type='application/pdf')
