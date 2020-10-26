@@ -1,5 +1,6 @@
 from django import template
-from recipe.models import Recipe, Tag, Cart
+
+from recipe.models import Cart
 from social.models import Favorit, Follow
 
 register = template.Library()
@@ -18,18 +19,15 @@ def rupluralize(value, endings):
     """
     Формирование названий во множественном числе
     """
-    try:
-        endings = endings.split(',')
-        if value % 100 in (11, 12, 13, 14):
-            return endings[2]
-        if value % 10 == 1:
-            return endings[0]
-        if value % 10 in (2, 3, 4):
-            return endings[1]
-        else:
-            return endings[2]
-    except:  # noqa
-        raise TemplateSyntaxError
+    endings = endings.split(',')
+    if value % 100 in (11, 12, 13, 14):
+        return endings[2]
+    if value % 10 == 1:
+        return endings[0]
+    if value % 10 in (2, 3, 4):
+        return endings[1]
+    else:
+        return endings[2]
 
 
 @register.filter
