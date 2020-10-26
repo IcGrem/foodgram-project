@@ -28,7 +28,7 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY')) or \
     sys.exit('SECRET_KEY environment variable is not set.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+DEBUG = False
 # DEBUG = True
 
 ALLOWED_HOSTS = ['*']
