@@ -27,7 +27,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./.env
+      - ./.env.deploy
 
   nginx:
     image: nginx:1.19.0

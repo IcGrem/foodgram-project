@@ -44,8 +44,6 @@ jobs:
         passphrase: ${{ secrets.PASSPHRASE }}
         port: 22
         script: |
-          sudo rm /etc/nginx/conf.d/default.conf
-          sudo cp nginx.conf /etc/nginx/conf.d
           sudo docker-compose restart
   send_message:
     runs-on: ubuntu-latest
