@@ -3,20 +3,17 @@ import json
 from xhtml2pdf import pisa
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.staticfiles import finders
 from django.core.paginator import Paginator
-from django.db.models import Count, Sum
+from django.db.models import Sum
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import get_template
 from django.views.generic import View
 
 from recipe.forms import RecipeForm
-from recipe.models import (
-    Cart, Ingredient, Recipe, RecipeIngredient, Tag, User)
+from recipe.models import Cart, Ingredient, Recipe, RecipeIngredient, User
 from recipe.service import get_ingredients_from_js, get_tags_from_get
 from social.forms import CommentForm
-from social.models import Comment
 
 
 def page_not_found(request, exception):
@@ -51,7 +48,7 @@ def index(request):
         'paginator': paginator,
         'recipe': recipes,
         'tags': tags_from_get
-        })
+    })
 
 
 def profile(request, username):
@@ -73,7 +70,7 @@ def profile(request, username):
         'profile': profile,
         'recipe': profile_recipes,
         'tags': tags_from_get
-        })
+    })
 
 
 def recipe_view(request, recipe_id):
@@ -88,7 +85,7 @@ def recipe_view(request, recipe_id):
         'recipe': recipe,
         'form': form,
         'comments': comments,
-        })
+    })
 
 
 @login_required
@@ -99,7 +96,7 @@ def recipe_new(request):
     author = get_object_or_404(User, username=request.user)
     recipe_form = RecipeForm(
         request.POST or None, files=request.FILES or None
-        )
+    )
     ingredients = get_ingredients_from_js(request)
     if recipe_form.is_valid():
         recipe = recipe_form.save(commit=False)
@@ -111,7 +108,7 @@ def recipe_new(request):
                 quantity=quantity,
                 ingredient=ingredient,
                 recipe=recipe
-                )
+            )
             recipe_ingredient.save()
         recipe_form.save_m2m()
         return redirect('index')
@@ -141,14 +138,14 @@ def recipe_edit(request, recipe_id):
                 quantity=quantity,
                 ingredient=ingredient,
                 recipe=recipe
-                )
+            )
             recipe_ingredient.save()
         recipe_form.save_m2m()
         return redirect('index')
     return render(request, 'recipe_change_form.html', {
         'form': recipe_form,
         'recipe': recipe,
-        })
+    })
 
 
 @login_required

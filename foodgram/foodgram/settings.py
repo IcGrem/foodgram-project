@@ -180,9 +180,9 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 SITE_ID = 1
 
 CACHES = {
-        'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        }
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
 }
 
 TEST_CACHES = {
@@ -192,5 +192,5 @@ TEST_CACHES = {
 }
 
 INTERNAL_IPS = [
-        '127.0.0.1',
+    '127.0.0.1',
 ]

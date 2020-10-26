@@ -2,15 +2,14 @@ import json
 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import View
 
-from recipe.models import Recipe, Tag, User
+from recipe.models import Recipe, User
 from recipe.service import get_tags_from_get
 from social.forms import CommentForm
-from social.models import Comment, Favorit, Follow
+from social.models import Favorit, Follow
 
 
 @login_required
@@ -20,14 +19,14 @@ def follow_index(request):
     """
     follows = Follow.objects.select_related(
         'user', 'author'
-        ).filter(user=request.user)
+    ).filter(user=request.user)
     paginator = Paginator(follows, 3)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(request, 'follow.html', {
         'page': page,
         'paginator': paginator,
-        })
+    })
 
 
 class Following(View):
@@ -57,7 +56,7 @@ def favorit_index(request):
     """
     favorit_recipes = Recipe.objects.select_related(
         'author'
-        ).prefetch_related('tag',).filter(favorits__author=request.user)
+    ).prefetch_related('tag',).filter(favorits__author=request.user)
     tags_qs, tags_from_get = get_tags_from_get(request)
     if tags_qs:
         favorit_recipes = Recipe.objects.filter(
@@ -107,8 +106,7 @@ def add_comment(request, recipe_id):
         comment.save()
         return redirect('recipe', recipe_id)
     return render(request, 'recipe.html', {
-        'username': username,
         'recipe_id': recipe_id,
         'recipe': recipe,
         'form': form
-        })
+    })

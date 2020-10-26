@@ -18,7 +18,7 @@ class RecipeAdmin(admin.ModelAdmin):
         'pub_date',
         'get_tags',
         'image',
-        )
+    )
     inlines = [IngredientsInline, ]
     exclude = ('ingredient',)
     search_fields = ('title',)
@@ -38,7 +38,7 @@ class TagAdmin(admin.ModelAdmin):
         'title',
         'color',
         'name',
-        )
+    )
     search_fields = ('title',)
     list_filter = ('title',)
     empty_value_display = '-пусто-'
