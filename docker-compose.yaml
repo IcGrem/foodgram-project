@@ -30,11 +30,11 @@ services:
       - ./.env
 
   nginx:
-    image: nginx
+    image: nginx:1.19.0
     volumes:
       - staticfiles:/code/static/
       - mediafiles:/code/media/
     ports:
-      - "80:80"
+      - "81:80"
     depends_on:
       - web
