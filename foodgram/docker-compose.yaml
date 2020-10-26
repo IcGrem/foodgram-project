@@ -8,7 +8,6 @@ volumes:
 services:
   db:
     image: postgres:latest
-    # не могу исправить, тесты требуют latest
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -30,11 +29,11 @@ services:
       - ./.env
 
   nginx:
-    image: nginx
+    build: ./nginx
     volumes:
       - staticfiles:/code/static/
       - mediafiles:/code/media/
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - web

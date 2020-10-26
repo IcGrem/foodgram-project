@@ -8,7 +8,6 @@ volumes:
 services:
   db:
     image: postgres:latest
-    # не могу исправить, тесты требуют latest
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -16,7 +15,7 @@ services:
       - ./.env
 
   web:
-    build: .
+    image: icgrem/foodgram:latest
     restart: always
     command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -30,11 +29,11 @@ services:
       - ./.env
 
   nginx:
-    image: nginx:1.19.0
+    build: ./nginx
     volumes:
       - staticfiles:/code/static/
       - mediafiles:/code/media/
     ports:
-      - "81:80"
+      - "8080:80"
     depends_on:
       - web
