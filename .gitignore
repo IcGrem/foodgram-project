@@ -132,3 +132,4 @@ dmypy.json
 /foodgram/static/debug_toolbar/
 # other
 /foodgram/cloud/
+/foodgram/media/recipe/*
