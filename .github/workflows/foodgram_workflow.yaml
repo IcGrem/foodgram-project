@@ -27,8 +27,7 @@ jobs:
     - name: Push to Docker Hub
       uses: docker/build-push-action@v1
       with:
-        path: ./foodgram
-        dockerfile: {path}/Dockerfile
+        dockerfile: ./foodgram/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: icgrem/foodgram
