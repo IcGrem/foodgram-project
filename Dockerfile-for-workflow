@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /code
 
-COPY . /code
+COPY ./foodgram /code
 
 RUN pip install --upgrade pip
 RUN pip install -r /code/requirements.txt

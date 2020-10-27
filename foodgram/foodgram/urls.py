@@ -32,8 +32,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     # flatpages
     path('about/', include('django.contrib.flatpages.urls')),
-    path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
-    path('terms/', views.flatpage, {'url': '/terms/'}, name='terms'),
+    path('about-project/', views.flatpage, {'url': '/about-project/'}, name='about-project'),
     path(
         'about-author/', views.flatpage,
         {'url': '/about-author/'}, name='about-author'),
