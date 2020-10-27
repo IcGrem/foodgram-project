@@ -27,11 +27,11 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY')) or \
     sys.exit('SECRET_KEY environment variable is not set.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     '84.201.179.105',
+    'ya-tube.ga',
     'food-gram.ga',
     'localhost',
     '127.0.0.1'
