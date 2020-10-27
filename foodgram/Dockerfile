@@ -9,6 +9,5 @@ COPY . /code
 RUN pip install --upgrade pip
 RUN pip install -r /code/requirements.txt
 
-# run entrypoint.sh
 RUN chmod +x /code/docker-entrypoint.sh
 ENTRYPOINT ["/code/docker-entrypoint.sh"]
