@@ -37,4 +37,4 @@
 Для создания в системе __суперпользователя__ выполните команду:  
     ```docker-compose exec web python manage.py createsuperuser```
 
-Пример работы сервиса можно посмотреть на https://food-gram.ga/
+Пример работы сервиса можно посмотреть на https://foodgram.pyproj.ru/
