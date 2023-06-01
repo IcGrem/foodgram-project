@@ -1,39 +1,50 @@
-version: '3.3'
+version: '3.9'
 
 volumes:
-  postgres_data:
-  staticfiles:
-  mediafiles:  
+  food_postgres_data:
+  food_staticfiles:
+  food_mediafiles:
 
 services:
-  db:
-    image: postgres:12.0-alpine
+  food_db:
+    image: postgres:13.0-alpine
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env
+      - food_postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - PGGSSENCMODE=disable
 
-  web:
+  food_web:
     build: .
     restart: always
-    command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn foodgram.wsgi:application --bind 0.0.0.0:4000
     volumes:
-      - staticfiles:/code/static/
-      - mediafiles:/code/media/
+      - food_staticfiles:/code/static/
+      - food_mediafiles:/code/media/
     ports:
-      - 8000:8000
+      - 4000:4000 
     depends_on:
-      - db
+      - food_db
     env_file:
       - ./.env
 
-  nginx:
+  food_nginx:
     build: ./nginx
+    restart: always
     volumes:
-      - staticfiles:/code/static/
-      - mediafiles:/code/media/
+      - food_staticfiles:/code/static/
+      - food_mediafiles:/code/media/
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
-      - web
+      - food_web

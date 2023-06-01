@@ -30,9 +30,9 @@ SECRET_KEY = str(os.environ.get('SECRET_KEY')) or \
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    '84.201.179.105',
-    'ya-tube.ga',
-    'food-gram.ga',
+    '45.90.216.78',
+    'pyproj.ru',
+    'foodgram.pyproj.ru',
     'localhost',
     '127.0.0.1'
 ]
@@ -98,13 +98,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
         'PORT': os.environ.get('DB_PORT'),
     }
 }
-
+print(DATABASES)
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
